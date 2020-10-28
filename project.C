@@ -1,3 +1,0 @@
-# projetinho-C
-
-int main 
