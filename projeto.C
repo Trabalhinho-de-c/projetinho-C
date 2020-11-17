@@ -114,3 +114,40 @@ int Menu (){
       printf("Opção invalida!!");
     }*/
   }
+
+struct cad{
+  int declaracao;
+  int valor;
+  int debito;
+  char prejuizo[20];
+  char lucro[20];
+  
+};
+
+int Cadastro (struct cad a){
+  
+  printf("Eai ganhou dinheiro hoje?\n 1: Ganhou\n 2: Perdeu \n");
+  scanf("%d\n", &a.declaracao);
+  
+  if (a.declaracao == 1){
+    printf("Ganhou quanto hoje?: \n");
+    scanf("%s", a.lucro);
+    FILE * ganhos = fopen("ganhos.txt","a");
+    fprintf(ganhos,"%s", a.lucro);
+    printf("dados computados\n");
+
+    fclose(ganhos);
+  }
+  if (a.declaracao == 2){
+    FILE * perda = fopen("perdas.txt","a");
+    printf("Perdeu quanto hoje?: \n");
+    scanf("%s", a.prejuizo);
+    fprintf(perda, "%s", a.prejuizo);
+    printf("dados computados\n");
+    
+    fclose(perda);
+  }
+
+
+
+}
