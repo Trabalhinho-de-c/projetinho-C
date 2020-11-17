@@ -1,12 +1,13 @@
-
 //=======================================================
 // Nome: Murilo Lameira da Silva    R.A: 22.120.008 - 2
 // Nome: Guilherme Brigagão Cabelo  R.A: 22.120.071 - 0
 // Data: 17/11/2020
-//=============== Gerenciador Finaceiro =================
+//=======================================================
+//            GERENCIADOR FINANCEIRO
+//=======================================================
 
 //=======================================================
-//				           BIBLIOTECAS
+//            BIBLIOTECAS
 //=======================================================
 #include <stdio.h>
 
@@ -16,93 +17,100 @@
 
 #include <time.h>
 //=======================================================
-//				    DECLARAÇÃO DAS FUNÇOES 
+//            DECLARAÇÃO DAS FUNÇOES 
 //=======================================================
 int Cadastro ();
 
 int Menu ();
 
-//=======================================================
-//				  DECLARAÇÃO DAS VARIAVEIS
-//=======================================================
+int Categoria();
 
+int Relatorio12meses();
+
+int RelatorioMes();
 
 //=======================================================
-//				     PROGRAMA PRINCIPAL
+//            DECLARAÇÃO DAS VARIAVEIS
+//=======================================================
+int opção = -1;
+
+//=======================================================
+//            PROGRAMA PRINCIPAL
 //=======================================================
 int main (void){
-  //int opção = 0;
   Menu ();
-		//printf("%d\n", &opção);
+  scanf("%d",&opção);
+while(opção >= 0 && opção <= 5){  
+  if (opção == 1){
+    Cadastro();
+    //Menu();
+    //scanf("%d",&opção);
+   
+  }
+  else if (opção == 2){
+      //Categoria();
+    }
+  else if (opção == 3){
+      //Relatorio12meses();
+    }
+  else if (opção == 4){
+      //int RelatorioMes();
+    }
+  else if (opção == 5){
+      //ainda pensando
+    }
+  else if (opção == 0){
+      printf("Obrigado por escolher nosso gerenciador!\n");
+      printf("Venha nos visitar novamente em breve :p\n\n");
+      break;
+    }
+  return 0;
+  }
+}
+
 	
 	
-}//fecha o main
+//}//fecha o main
 
 
 //=======================================================
-//					        FUNÇÕES
+//            FUNÇÕES
 //=======================================================
 int Menu (){
-  int opção = -1;
+  //int opção = -1;
 
   printf("");
   printf("1 - Cadastro\n"); 
   printf("2 - Categorias\n");
   printf("3 - Relatório 12 meses\n");
   printf("4 - Relatório último mes\n");
-  printf("5 - ");
+  printf("5 - \n");
 
   printf("0 - Sair\n");
   printf("o que deseja fazer?: ");
-  scanf("%d",&opção);
-  
-  while(opção < 0 || opção > 4){
-    switch(opção){
-//-------- switch chama função 'Sair'  
-      case 0:
-          printf("Agradecemos a sua preferencia");
-          printf("Volte sempre!!");
-      break;
-//---------------------------------------------------
-//-------- switch chama função 'Cadastro'------------   
-      case 1:
-          Cadastro();
-          printf("Cadastro");
-      break;
-//---------------------------------------------------
-//-------- switch chama função 'Categorias'-----------
-      case 2:
-          //Categorias();
-          printf("case 2");
-      break;
-//---------------------------------------------------
-//-------- switch chama função 'Relatório 12 meses'--   
-      case 3:
-         //Relat12meses();
-         printf("case 3");
-      break;
-//---------------------------------------------------
-//-------- switch chama função 'Relatório Ultimo mes'  
-      case 4:
-          //RelatUltMes();
-          printf("case 4");
-      break;
-//---------------------------------------------------  
-    }
+  //scanf("%d",&opção);
+
+
+ /* if (opção == 1){
+    Cadastro();
   }
-  return 0;
-}
-
-
-
-
-int Cadastro (){
-
-  FILE *arq;
-
-  arq = fopen("NovaPessoa.txt", "w");
-
-  fclose(arq);
-
-}
-
+    else if (opção == 2){
+        //Categoria();
+    }
+    else if (opção == 3){
+        //Relatorio12meses();
+    }
+    else if (opção == 4){
+        //int RelatorioMes();
+    }
+    else if (opção == 5){
+        //ainda pensando
+    }
+    else if (opção == 0){
+      printf("Obrigado por escolher nosso gerenciador!");
+      printf("Venha nos visitar novamente em breve :p");
+    }
+    else {
+      printf("Opção invalida!!");
+    }*/
+  }
