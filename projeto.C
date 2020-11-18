@@ -127,7 +127,7 @@ struct cad{
 int Cadastro (struct cad a){
   
   printf("Eai ganhou dinheiro hoje?\n 1: Ganhou\n 2: Perdeu \n");
-  scanf("%d\n", &a.declaracao);
+  scanf("%d*c\n", &a.declaracao);
   
   if (a.declaracao == 1){
     printf("Ganhou quanto hoje?: \n");
