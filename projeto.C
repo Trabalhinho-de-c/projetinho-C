@@ -23,55 +23,51 @@ int Cadastro ();
 
 int Menu ();
 
-int Categoria();
-
 int Relatorio12meses();
 
 int RelatorioMes();
 
+int saida();
+
 //=======================================================
 //            DECLARAÇÃO DAS VARIAVEIS
 //=======================================================
-int opção = -1;
-
+int opção = -1;  //variavel para o menu
+int categ = -1;  //variavel para a categoria
 //=======================================================
 //            PROGRAMA PRINCIPAL
 //=======================================================
 int main (void){
-  Menu ();
-  scanf("%d",&opção);
-while(opção >= 0 && opção <= 5){  
+  Menu();
+  scanf("%d*c",&opção);
+  
+while(opção >= 0 && opção <= 5){
+    
   if (opção == 1){
     Cadastro();
-    //Menu();
-    //scanf("%d",&opção);
+    Menu();
+    scanf("%d",&opção);
    
   }
-  else if (opção == 2){
-      //Categoria();
-    }
-  else if (opção == 3){
+  if (opção == 2){
       //Relatorio12meses();
     }
-  else if (opção == 4){
+  if (opção == 3){
       //int RelatorioMes();
     }
-  else if (opção == 5){
+  if (opção == 4){
+      //em desenvolvimento
+    }
+  if (opção == 5){
       //ainda pensando
     }
-  else if (opção == 0){
-      printf("Obrigado por escolher nosso gerenciador!\n");
-      printf("Venha nos visitar novamente em breve :p\n\n");
-      break;
-    }
-  return 0;
+  if (opção == 0){
+    saida();
+    break;
   }
+  }
+  return 0;
 }
-
-	
-	
-//}//fecha o main
-
 
 //=======================================================
 //            FUNÇÕES
@@ -150,4 +146,35 @@ int Cadastro (struct cad a){
 
 
 
+}
+
+struct exit{
+  int saida;
+  char opiniao[100];
+};
+
+int saida(struct exit b){
+  printf("Por favor avalie nosso sistema com uma nota de 0 até 10: \n");
+  scanf("%d", &b.saida);
+
+  if(b.saida <= 5){
+    printf("Ainda estamos em desenvolvimento, poderia nós ajudar a melhorar?\n");
+    printf("Deixe sua opinião aqui?\n");
+    scanf("%s", b.opiniao);
+    printf("Estaremos esperando você novamente!\n");
+  }
+  if(b.saida > 5 && b.saida <= 8){
+    printf("Obrigado pela sua nota!\n");
+    printf("Deseja deixar sua opinao para futuros upgrades?\n");
+    scanf("%s", b.opiniao);
+    printf("Estaremos esperando você novamente!\n");
+  }
+  if(b.saida > 8 && b.saida <= 10){
+    printf("Estamos muito contentes com a sua avaliação! :)\n");
+    scanf("%s", b.opiniao);
+    printf("Estaremos esperando você novamente!\n");
+  }
+  else{
+    printf("Infelizmente sua nota está fora dos nossos padrões");
+  }
 }
