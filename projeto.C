@@ -50,10 +50,10 @@ while(opção >= 0 && opção <= 5){
    
   }
   if (opção == 2){
-      //Relatorio12meses();
+      Relatorio12meses();
     }
   if (opção == 3){
-      //int RelatorioMes();
+      RelatorioMes();
     }
   if (opção == 4){
       //em desenvolvimento
@@ -73,7 +73,6 @@ while(opção >= 0 && opção <= 5){
 //            FUNÇÕES
 //=======================================================
 int Menu (){
-  //int opção = -1;
 
   printf("");
   printf("1 - Cadastro\n"); 
@@ -84,9 +83,6 @@ int Menu (){
 
   printf("0 - Sair\n");
   printf("o que deseja fazer?: ");
-  //scanf("%d",&opção);
-
-
   }
 
 //======================================================
