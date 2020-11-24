@@ -87,66 +87,98 @@ int Menu (){
   //scanf("%d",&opção);
 
 
- /* if (opção == 1){
-    Cadastro();
-  }
-    else if (opção == 2){
-        //Categoria();
-    }
-    else if (opção == 3){
-        //Relatorio12meses();
-    }
-    else if (opção == 4){
-        //int RelatorioMes();
-    }
-    else if (opção == 5){
-        //ainda pensando
-    }
-    else if (opção == 0){
-      printf("Obrigado por escolher nosso gerenciador!");
-      printf("Venha nos visitar novamente em breve :p");
-    }
-    else {
-      printf("Opção invalida!!");
-    }*/
   }
 
+//======================================================
+//========= Função Cadastro ============================
 struct cad{
   int declaracao;
   int valor;
   int debito;
+  char data[20];
   char prejuizo[20];
   char lucro[20];
+  char categoria[20];
   
 };
 
 int Cadastro (struct cad a){
-  
-  printf("Eai ganhou dinheiro hoje?\n 1: Ganhou\n 2: Perdeu \n");
+  printf("Digite a data atual como no exemplo (01.02.2020): \n");
+  scanf("%s",a.data);
+  printf(" [1] Ganhou dinheiro?\n [2] Perdeu dinheiro?\nQual sua opção: ");
   scanf("%d*c\n", &a.declaracao);
+  printf("----------------------------------------------\n");
+  
   
   if (a.declaracao == 1){
-    printf("Ganhou quanto hoje?: \n");
+    printf("Ganhou quanto hoje?: ");
     scanf("%s", a.lucro);
-    FILE * ganhos = fopen("ganhos.txt","a");
-    fprintf(ganhos,"%s", a.lucro);
-    printf("dados computados\n");
+    printf("----------------------------------------------\n");
+    printf("Com o que ganhou dinheiro hoje? \n");
+    printf("Salario\n");
+    printf("Vendas\n");
+    printf("Outros\n");
+    printf("----------------------------------------------\n");
+    printf("Categoria: ");
+    scanf("%s", a.categoria);
+    printf("----------------------------------------------\n");
+    FILE * ganhos = fopen("registro.txt","a");
+    fprintf(ganhos,"%s\n", a.lucro);
+    fprintf(ganhos,"%s\n", a.data);
+    fprintf(ganhos,"%s\n\n",a.categoria);
 
+    printf("Dados computados\n");
+    
     fclose(ganhos);
   }
   if (a.declaracao == 2){
-    FILE * perda = fopen("perdas.txt","a");
-    printf("Perdeu quanto hoje?: \n");
+    FILE * perda = fopen("registro.txt","a");
+    printf("Perdeu quanto hoje? ");
     scanf("%s", a.prejuizo);
-    fprintf(perda, "%s", a.prejuizo);
-    printf("dados computados\n");
+    printf("----------------------------------------------\n");
+    printf("Com o que gastou seu dinheiro hoje? \n");
+    printf("Alimentação\n");
+    printf("Transporte\n");
+    printf("Moradia\n");
+    printf("Estudos\n");
+    printf("Pessoal\n");
+    printf("----------------------------------------------\n");
+    printf("Categoria: ");
+    scanf("%s", a.categoria);
+    printf("----------------------------------------------\n");
+    fprintf(perda, "-""%s\n", a.prejuizo);
+    fprintf(perda,"%s\n", a.data);
+    fprintf(perda,"%s\n\n",a.categoria);
+
+    printf("Dados computados\n");
     
     fclose(perda);
   }
+  if(a.declaracao != 1 || a.declaracao != 2 ){
+    printf("Você digitou uma opção inválida, volte para o menu e faço o processo novamente :) ");
 
+  }
 
-
+  return 0;
 }
+//======================================================
+//========= Função 12 Meses ============================
+struct R12{
+char teste[20];
+
+};
+
+int Relatorio12meses(struct R12 c){
+
+  printf("ta funfando? ");
+  scanf("%s", c.teste);
+  return 0;
+}
+
+
+
+//======================================================
+
 
 struct exit{
   int saida;
