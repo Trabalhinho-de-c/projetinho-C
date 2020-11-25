@@ -73,18 +73,17 @@ while(opção >= 0 && opção <= 5){
 //            FUNÇÕES
 //=======================================================
 int Menu (){
-  //int opção = -1;
 
-  printf("");
-  printf("1 - Cadastro\n"); 
-  printf("2 - Categorias\n");
-  printf("3 - Relatório 12 meses\n");
-  printf("4 - Relatório último mes\n");
-  printf("5 - \n");
+  printf("----------------------------------------------\n");
+  printf("[1] - Cadastro\n"); 
+  printf("[2] - Categorias\n");
+  printf("[3] - Relatório 12 meses\n");
+  printf("[4] - Relatório último mes\n");
+  printf("[5] - \n");
 
   printf("0 - Sair\n");
+  printf("----------------------------------------------\n");
   printf("o que deseja fazer?: ");
-  //scanf("%d",&opção);
 
   return 0;
   }
@@ -178,6 +177,24 @@ int Relatorio12meses(struct R12 c){
 
 
 //======================================================
+//========= Função Mes =================================
+struct Mes{
+  char ano[20];
+  char mes[20];
+};
+int RelatorioMes(struct Mes e){ 
+  printf("Digite o Ano\n");
+  scanf("%s",e.ano);
+  printf("Digite o Mês que deseja: \n");
+  scanf("%s",e.mes);
+  FILE* relat = fopen ("Registro.txt", "r");
+  FILE* relhtml = fopen("Registro.html", "w");
+
+
+return 0;
+}
+//======================================================
+//========== Função Saída ==============================
 
 
 struct exit{
