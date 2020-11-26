@@ -103,10 +103,12 @@ struct cad{
   int declaracao;
   int valor;
   int debito;
-  char data[20];
-  char prejuizo[20];
-  char lucro[20];
-  char categoria[20];
+  char data[100];
+  char prejuizo[100];
+  char lucro[100];
+  char categoria[100];
+  char saldoT[40];
+  char total[40];
   
 };
 
@@ -116,9 +118,10 @@ int Cadastro (struct cad a){
   printf(" [1] Ganhou dinheiro?\n [2] Perdeu dinheiro?\nQual sua opção: ");
   scanf("%d*c\n", &a.declaracao);
   printf("----------------------------------------------\n");
-  
+  int aux = 0;
   
   if (a.declaracao == 1){
+    
     printf("Ganhou quanto hoje?: ");
     scanf("%s", a.lucro);
     printf("----------------------------------------------\n");
@@ -136,6 +139,30 @@ int Cadastro (struct cad a){
     fprintf(ganhos,"%s\n\n",a.categoria);
 
     printf("Dados computados\n");
+    printf("----------------------------------------------\n");
+    FILE *abrir = fopen("saldo.txt","a");
+    fclose(abrir);
+
+    FILE * ler = fopen("saldo.txt","r");
+    int i = 0;
+    while( fgets(a.saldoT ,40 , ler) != NULL ){   
+      i++;
+      
+    }
+
+      float valor = atof(a.saldoT);
+      float lucro = atof(a.lucro);
+
+      float total = valor + lucro;
+      
+      
+      
+      FILE *arq = fopen("saldo.txt","w");
+      fprintf(arq, "%.2f", total);
+      fclose(arq);
+
+     
+    fclose(ler);
     
     fclose(ganhos);
   }
@@ -149,7 +176,7 @@ int Cadastro (struct cad a){
     printf("Transporte\n");
     printf("Moradia\n");
     printf("Estudos\n");
-    printf("Pessoal\n");
+    printf("Pessoais\n");
     printf("----------------------------------------------\n");
     printf("Categoria: ");
     scanf("%s", a.categoria);
@@ -159,16 +186,59 @@ int Cadastro (struct cad a){
     fprintf(perda,"%s\n\n",a.categoria);
 
     printf("Dados computados\n");
+
+    FILE *abrir = fopen("saldo.txt","a");
+    fclose(abrir);
+    FILE * ler = fopen("saldo.txt","r");
+    int i = 0;
+    while( fgets(a.saldoT ,40 , ler) != NULL ){   
+      i++;
+      
+    }
+
+      float valor = atof(a.saldoT);
+      float prejuizo = atof(a.prejuizo);
+
+      float total = valor - prejuizo;
+      
+      
+      
+      FILE *arq = fopen("saldo.txt","w");
+      fprintf(arq, "%.2f", total);
+      fclose(arq);
     
     fclose(perda);
   }
   else if (a.declaracao > 2 || a.declaracao < 1){
-    printf("Você digitou uma opção inválida, volte para o menu e faço o processo novamente :) \n");
+    printf("Você digitou uma opção inválida, volte para o menu e faça o processo novamente :) ");
 
   }
 
   return 0;
+  
 }
+
+//======================================================
+//========= Função Saldo ============================
+struct saldo{
+  char saldoT[100];
+  
+};
+int saldo(struct saldo a){
+  int i = 0;
+
+  FILE * ler = fopen("saldo.txt","r");
+  while( fgets(a.saldoT ,40 , ler) != NULL ){   
+  i++;
+  
+  }
+  printf("Seu saldo atualmente é de: R$");
+  printf("%s\n",a.saldoT);
+  
+  fclose(ler);
+return 0;
+}
+
 //======================================================
 //========= Função 12 Meses ============================
 struct R12{
