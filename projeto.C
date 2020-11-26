@@ -314,3 +314,33 @@ int saida(struct exit b){
   }
 return 0;
 }
+//=======================================================
+//====== Função Reseta ==================================
+struct apaga{
+  int del;
+};
+
+int Resetar(struct apaga g){
+ printf(" [1] - SIM\n [2] - NÃO\nRealmenente deseja apagar todos os dados? ");
+ scanf("%d", &g.del);
+ printf("----------------------------------------------\n");
+
+  if(g.del == 1){
+    remove("registro.txt");
+    remove("saldo.txt");
+    remove("RelatMes.html");
+    printf("Todos dados deletados\n");
+  }
+  else if(g.del == 2){
+      Menu();
+      scanf("%d",&opção);
+
+  }
+  else{
+    printf("Opção invalida");
+  }
+
+
+return 0;  
+}
+//=======================================================
