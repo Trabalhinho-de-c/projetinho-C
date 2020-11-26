@@ -50,14 +50,21 @@ while(opção >= 0 && opção <= 5){
    
   }
   if (opção == 2){
-      //Relatorio12meses();
+    saldo();
+    Menu();
+    scanf("%d",&opção);
+
     }
   if (opção == 3){
-      //int RelatorioMes();
+    RelatorioMes();
+    Menu();
+    scanf("%d",&opção);
     }
   if (opção == 4){
-      //em desenvolvimento
-    }
+    Relatorio12meses();
+    Menu();
+    scanf("%d",&opção);
+  }
   if (opção == 5){
       //ainda pensando
     }
@@ -73,17 +80,19 @@ while(opção >= 0 && opção <= 5){
 //            FUNÇÕES
 //=======================================================
 int Menu (){
+  
 
   printf("----------------------------------------------\n");
   printf("[1] - Cadastro\n"); 
-  printf("[2] - Categorias\n");
-  printf("[3] - Relatório 12 meses\n");
-  printf("[4] - Relatório último mes\n");
+  printf("[2] - Saldo\n");
+  printf("[3] - Relatório último mes \n");
+  printf("[4] - Relatório Anual\n");
   printf("[5] - \n");
 
-  printf("0 - Sair\n");
+  printf("[0] - Sair\n");
   printf("----------------------------------------------\n");
-  printf("o que deseja fazer?: ");
+  printf("O que deseja fazer?: ");
+  
 
   return 0;
   }
