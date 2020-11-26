@@ -172,14 +172,20 @@ int Cadastro (struct cad a){
 //======================================================
 //========= Função 12 Meses ============================
 struct R12{
-char teste[20];
+char ano1[20];
+char mes1[20];
 
 };
 
 int Relatorio12meses(struct R12 c){
-
-  printf("ta funfando? ");
-  scanf("%s", c.teste);
+  printf("Digite o Ano\n");
+  scanf("%s",c.ano1);
+  printf("Digite o Mês que deseja: \n");
+  scanf("%s",c.mes1);
+  FILE* relat = fopen ("Registro.txt", "r");
+  FILE* relhtml = fopen("RelatAnual.html", "w");
+  fprintf(relhtml,"");
+ 
   return 0;
 }
 
@@ -188,8 +194,8 @@ int Relatorio12meses(struct R12 c){
 //======================================================
 //========= Função Mes =================================
 struct Mes{
-  char ano[20];
-  char mes[20];
+  char ano[100];
+  char mes[100];
 };
 int RelatorioMes(struct Mes e){ 
   printf("Digite o Ano\n");
@@ -197,7 +203,8 @@ int RelatorioMes(struct Mes e){
   printf("Digite o Mês que deseja: \n");
   scanf("%s",e.mes);
   FILE* relat = fopen ("Registro.txt", "r");
-  FILE* relhtml = fopen("Registro.html", "w");
+  FILE* relhtml = fopen("RelatMes.html", "w");
+  fprintf(relhtml,"\n");
 
 
 return 0;
