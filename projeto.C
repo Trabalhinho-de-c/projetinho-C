@@ -28,6 +28,8 @@ int Relatorio12meses();
 int RelatorioMes();
 
 int saida();
+ 
+int Resetar(); 
 
 //=======================================================
 //            DECLARAÇÃO DAS VARIAVEIS
@@ -66,7 +68,9 @@ while(opção >= 0 && opção <= 5){
     scanf("%d",&opção);
   }
   if (opção == 5){
-      //ainda pensando
+      Resetar();
+      Menu();
+      scanf("%d",&opção);
     }
   if (opção == 0){
     saida();
@@ -87,7 +91,7 @@ int Menu (){
   printf("[2] - Saldo\n");
   printf("[3] - Relatório último mes \n");
   printf("[4] - Relatório Anual\n");
-  printf("[5] - \n");
+  printf("[5] - Deletar todos os dados\n");
 
   printf("[0] - Sair\n");
   printf("----------------------------------------------\n");
@@ -344,3 +348,37 @@ int Resetar(struct apaga g){
 return 0;  
 }
 //=======================================================
+//====== Função cria html anual =========================
+
+int HtmlAnual(){
+  FILE* relhtml = fopen("RelatAnual.html", "w");
+  fprintf(relhtml,"<!DOCTYPE html>\n<html lang='en'>\n");
+  fprintf(relhtml,"<head>\n<meta charset='UTF-8'>\n<meta name='viewport' content='widht=devide-widhtinitial-scale=1.0'>\n<meta http-equi='X-UA-Compatible' content='ie=edge'>\n<title>Grafico Anual</title>\n</head>\n");
+  
+  fprintf(relhtml,"<body>\n<canvas class='line-chart'></canvas>\n<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'>\n</script>\n");
+  
+  fprintf(relhtml,"<script>\nvar ctx = document.getElementsByClassName('line-chart');\nvar myDoughnutChart = new Chart(ctx, {type: 'line', data: {labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],\ndatasets: [{label: 'Alimentação', data: [535, 874, 482, 682, 572, 919, 192, 128, 791, 892, 472, 293, 939, 138],\nborderWidth: 6,\nborderColor: 'rgba(50, 115, 220,0.90)',\nbackgroundColor: 'transparent',},"); 
+  fprintf(relhtml,"{label: 'Transporte', data: [150, 75, 97, 689, 572, 910, 719, 182, 789, 189, 942, 823, 989, 938],\nborderWidth: 6,\nborderColor: 'rgba(6,204,6,0.85)',\nbackgroundColor: 'transparent',\n},");
+  fprintf(relhtml,"{label: 'Moradia', data: [600, 780, 970, 689, 572, 910, 719, 482, 789, 589, 642, 723, 489, 538],\nborderWidth: 6,\nborderColor: 'rgba(77,166,253,0.85)',\nbackgroundColor: 'transparent',\n},");
+  fprintf(relhtml,"{label: 'Estudos', data: [100, 78, 97, 189, 72, 91, 79, 82, 89, 99, 64, 72, 89, 58],\nborderWidth: 6,\nborderColor: 'rgba(220, 70, 70,.60)',\nbackgroundColor: 'transparent',\n},");
+  fprintf(relhtml,"{label: 'Pessoais', data: [800, 978, 597, 489, 772, 391, 579, 282, 389, 399, 264, 372, 289, 358],\nborderWidth: 6,\nborderColor: 'rgba(225, 0, 0,.60)',\nbackgroundColor: 'transparent',}]}});\n</script>\n");
+  fprintf(relhtml,"</body>\n");
+  fprintf(relhtml,"</html>\n");
+
+  fclose(relhtml);
+return 0;
+}
+
+//=======================================================
+//====== Função cria html mensal ========================
+int HtmlMensal(){
+  FILE* relatoriohtml = fopen("RelatMes.html", "w");
+  fprintf(relatoriohtml,"<!DOCTYPE html>\n<html lang='en'>\n<head>\n<meta charset='UTF-8'>\n<meta name='viewport' content='widht=devide-widht, initial-scale=1.0'>\n<meta http-equi='X-UA-Compatible' content='ie=edge'>\n<title>Grafico Mensal</title>\n</head>\n ");
+  fprintf(relatoriohtml,"<body>\n<canvas class='line-chart'></canvas>\n<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>\n<script>\nvar ctx = document.getElementsByClassName('line-chart');\nvar myDoughnutChart = new Chart(ctx, {\ntype: 'line',\ndata: {\nlabels: ['Alimentação', 'Transporte',\n 'Moradia', 'Estudos', 'Pessoais'],\ndatasets: [{\nlabel: 'SEU GASTO MENSAL',\ndata: [535, 874, 482, 682, 572, 919, 192, 128],\nborderWidth: 6,\nborderColor: 'rgba(77,166,253,0.85)',\nbackgroundColor: 'transparent',\n}]}});\n</script>\n ");
+  
+  
+  fclose(relatoriohtml);
+return 0;
+}
+//=======================================================
+
