@@ -436,7 +436,6 @@ return 0;
 //========= Função Mes =================================
 struct R1{
 
-char data[40];
 char aux[200][20];
 char auxano[10];
 char auxmes[10];
@@ -447,25 +446,33 @@ int anoCL;
 
 int Relatorio1mes(struct R1 c){ 
 
-  printf("Digite o Ano em quer procurar: ex: (20)\n");
+  printf("Digite o Ano em quer procurar, ex:(20)\n");
   scanf("%d",&c.anoCL);
+	printf("----------------------------------------------\n");
+  if(c.anoCL > 99 || c.anoCL <0){
+    puts("Você digitou um ano invalido ");
+		puts("Volte para o menu novamente!!");
+    return 0;
+  }
 
-  printf("Digite o mes em quer procurar: ex: (02)\n");
+  printf("Digite o mês em quer procurar, ex:(02)\n");
   scanf("%d",&c.mesCL);
-  
-  
-
+	printf("----------------------------------------------\n");
+  if(c.mesCL > 12 || c.mesCL <= 0){
+    puts("Você digitou um mês invalido ");
+		puts("Volte para o menu novamente!!");
+    return 0;
+  }
 
   char moradiaS[15]="moradia";
-  char alimentacaoS[15]="alimentacao";
+  char alimentacaoS[15]="alimentação";
   char trasnporteS[15]="transporte";
   char estudoS[15] = "estudos";
-  char comprasS[15] = "compras";
   char salarioS[15] = "salario";
   char vendasS[15] = "vendas";
   char outrosS[15] = "outros";
   char pessoaisS[15] = "pessoais";
-  float moradia=0;
+  float moradia;
   float alimentacao=0;
   float transporte=0;
   float estudos=0;
@@ -480,9 +487,9 @@ int Relatorio1mes(struct R1 c){
   
     FILE * ler = fopen("registro.txt","r");
     while( fgets(c.aux[i] ,20 , ler) != NULL ){
-    i++;
-    fclose(ler);
+    i++;  
   }
+  fclose(ler);
     
     for(j=0; j!=i; j++){
     c.auxmes[0] = c.aux[j][3];
@@ -498,32 +505,49 @@ int Relatorio1mes(struct R1 c){
     
       if(ano==c.anoCL&& mes== c.mesCL){
         if (strstr(c.aux[j+1],moradiaS) != NULL){
-          moradia = moradia + atof(c.aux[j+2]);
+          moradia = moradia + atof(c.aux[j-1]);
+          
         }
         if (strstr(c.aux[j+1],alimentacaoS) != NULL){
-          alimentacao = alimentacao + atof(c.aux[j+2]);
+          alimentacao = alimentacao + atof(c.aux[j-1]);
         }
         if (strstr(c.aux[j+1],trasnporteS) != NULL){
-          transporte = transporte + atof(c.aux[j+2]);
+          transporte = transporte + atof(c.aux[j-1]);
         }
         if (strstr(c.aux[j+1],estudoS) != NULL){
-          estudos = estudos + atof(c.aux[j+2]);
+          estudos = estudos + atof(c.aux[j-1]);
         }
         if (strstr(c.aux[j+1],vendasS) != NULL){
-          vendas = vendas + atof(c.aux[j+2]);
+          vendas = vendas + atof(c.aux[j-1]);
         }
         if (strstr(c.aux[j+1],salarioS) != NULL){
-          salario = salario + atof(c.aux[j+2]);
+          salario = salario + atof(c.aux[j-1]);
         }
         if (strstr(c.aux[j+1],outrosS) != NULL){
-          outros = outros + atof(c.aux[j+2]);
+          outros = outros + atof(c.aux[j-1]);
         }
 
       }
     }
+	FILE* relatoriohtml = fopen("RelatMes.html", "w");
+  fprintf(relatoriohtml,"<!DOCTYPE html><html lang='n'><head><meta charset='UTF-8'><meta name='viewport' content='widht=devide-widht, initial-scale=1.0'><meta http-equi='X-UA-Compatible' content='ie=edge'><title>Grafico Mensal</title></head>");
+  fprintf(relatoriohtml,"<body><canvas class='line-chart'></canvas><script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>\n");
+  fprintf(relatoriohtml,"<script>var ctx = document.getElementsByClassName('line-chart');var myDoughnutChart = new Chart(ctx, {type: 'line', data: {labels: ['Alimentação', 'Transporte', 'Moradia', 'Estudos', 'Pessoais', 'Vendas', 'Salário', 'Outros'], datasets: [{label: 'SUAS MOVIMENTAÇÕES NESTE MÊS',\n");
+    fprintf(relatoriohtml," data:  [ %.2f,", alimentacao);
+    fprintf(relatoriohtml," %.2f,\n",  transporte);
+    fprintf(relatoriohtml," %.2f,\n ", moradia);
+    fprintf(relatoriohtml," %.2f,\n ", estudos);
+    fprintf(relatoriohtml," %.2f,\n ", pessoais);
+    fprintf(relatoriohtml," %.2f,\n ", salario);
+    fprintf(relatoriohtml," %.2f,\n ", vendas);
+    fprintf(relatoriohtml," %.2f],\n", outros);
+    fprintf(relatoriohtml," borderWidth: 6, borderColor: 'rgba(77,166,253,0.85)', backgroundColor: 'transparent',}]}});\n");
+  fprintf(relatoriohtml,"</script></body></html>");
+  fclose(relatoriohtml);
   
-  
-    
+	printf("----------------------------------------------\n");
+  printf("Arquivo gerado com sucesso!!\n");
+	printf("----------------------------------------------\n");  
   return 0;
 }
 //======================================================
