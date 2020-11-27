@@ -25,11 +25,13 @@ int Menu ();
 
 int Relatorio12meses();
 
-int RelatorioMes();
+int Relatorio1mes();
+
+int saldo();
+ 
+int Resetar();
 
 int saida();
- 
-int Resetar(); 
 
 //=======================================================
 //            DECLARAÇÃO DAS VARIAVEIS
@@ -58,7 +60,7 @@ while(opção >= 0 && opção <= 5){
 
     }
   if (opção == 3){
-    RelatorioMes();
+    Relatorio1mes();
     Menu();
     scanf("%d",&opção);
     }
@@ -117,7 +119,7 @@ struct cad{
 };
 
 int Cadastro (struct cad a){
-  printf("Digite a data atual como no exemplo (01.02.2020): \n");
+  printf("Digite a data atual como no exemplo (01/02/20): \n");
   scanf("%s",a.data);
   printf(" [1] Ganhou dinheiro?\n [2] Perdeu dinheiro?\nQual sua opção: ");
   scanf("%d*c\n", &a.declaracao);
@@ -267,21 +269,97 @@ int Relatorio12meses(struct R12 c){
 
 //======================================================
 //========= Função Mes =================================
-struct Mes{
-  char ano[100];
-  char mes[100];
+struct R1{
+
+char data[40];
+char aux[200][20];
+char auxano[10];
+char auxmes[10];
+int mesCL;
+int anoCL;
+
 };
-int RelatorioMes(struct Mes e){ 
-  printf("Digite o Ano\n");
-  scanf("%s",e.ano);
-  printf("Digite o Mês que deseja: \n");
-  scanf("%s",e.mes);
-  FILE* relat = fopen ("Registro.txt", "r");
-  FILE* relhtml = fopen("RelatMes.html", "w");
-  fprintf(relhtml,"\n");
+
+int Relatorio1mes(struct R1 c){ 
+
+  printf("Digite o Ano em quer procurar: ex: (20)\n");
+  scanf("%d",&c.anoCL);
+
+  printf("Digite o mes em quer procurar: ex: (02)\n");
+  scanf("%d",&c.mesCL);
+  
+  
 
 
-return 0;
+  char moradiaS[15]="moradia";
+  char alimentacaoS[15]="alimentacao";
+  char trasnporteS[15]="transporte";
+  char estudoS[15] = "estudos";
+  char comprasS[15] = "compras";
+  char salarioS[15] = "salario";
+  char vendasS[15] = "vendas";
+  char outrosS[15] = "outros";
+  char pessoaisS[15] = "pessoais";
+  float moradia=0;
+  float alimentacao=0;
+  float transporte=0;
+  float estudos=0;
+  float pessoais=0;
+  float salario=0;
+  float vendas=0 ; 
+  float outros = 0;
+  int i = 0;
+  int j = 0;
+  int ano = 0;
+  int mes = 0;
+  
+    FILE * ler = fopen("registro.txt","r");
+    while( fgets(c.aux[i] ,20 , ler) != NULL ){
+    i++;
+    fclose(ler);
+  }
+    
+    for(j=0; j!=i; j++){
+    c.auxmes[0] = c.aux[j][3];
+    c.auxmes[1] = c.aux[j][4];
+    c.auxmes[2] = '\0';
+
+    c.auxano[0] = c.aux[j][6];
+    c.auxano[1] = c.aux[j][7];
+    c.auxano[2] = '\0';
+
+    ano = atoi(c.auxano);
+    mes = atof(c.auxmes);
+    
+      if(ano==c.anoCL&& mes== c.mesCL){
+        if (strstr(c.aux[j+1],moradiaS) != NULL){
+          moradia = moradia + atof(c.aux[j+2]);
+        }
+        if (strstr(c.aux[j+1],alimentacaoS) != NULL){
+          alimentacao = alimentacao + atof(c.aux[j+2]);
+        }
+        if (strstr(c.aux[j+1],trasnporteS) != NULL){
+          transporte = transporte + atof(c.aux[j+2]);
+        }
+        if (strstr(c.aux[j+1],estudoS) != NULL){
+          estudos = estudos + atof(c.aux[j+2]);
+        }
+        if (strstr(c.aux[j+1],vendasS) != NULL){
+          vendas = vendas + atof(c.aux[j+2]);
+        }
+        if (strstr(c.aux[j+1],salarioS) != NULL){
+          salario = salario + atof(c.aux[j+2]);
+        }
+        if (strstr(c.aux[j+1],outrosS) != NULL){
+          outros = outros + atof(c.aux[j+2]);
+        }
+
+      }
+    }
+  
+  
+    
+  return 0;
 }
 //======================================================
 //========== Função Saída ==============================
@@ -296,7 +374,7 @@ int saida(struct exit b){
   printf("Por favor avalie nosso sistema com uma nota de 0 até 10: \n");
   scanf("%d", &b.saida);
 
-  if(b.saida >= 0 || b.saida <= 5 ){
+  if(b.saida >= 0 && b.saida <= 5 ){
     printf("Ainda estamos em desenvolvimento, poderia nós ajudar a melhorar?\n");
     printf("Deixe sua opinião aqui?\n");
     scanf("%s", b.opiniao);
