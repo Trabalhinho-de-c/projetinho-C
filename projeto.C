@@ -19,19 +19,23 @@
 //=======================================================
 //            DECLARAÇÃO DAS FUNÇOES 
 //=======================================================
-int Cadastro ();
+int  Cadastro ();
 
-int Menu ();
+int  Menu ();
 
-int Relatorio12meses();
+int  saldo();
 
-int Relatorio1mes();
+int  Relat12meses();
 
-int saldo();
- 
-int Resetar();
+int  Relatorio1mes();
 
-int saida();
+int  saida();
+
+int  Resetar();
+
+int  HtmlAnual();
+
+int  HtmlMensal();
 
 //=======================================================
 //            DECLARAÇÃO DAS VARIAVEIS
@@ -44,9 +48,12 @@ int categ = -1;  //variavel para a categoria
 int main (void){
   Menu();
   scanf("%d*c",&opção);
+  FILE *abrir = fopen("saldo.txt","a");
+  fclose(abrir);
+  FILE * ganhos = fopen("registro.txt","a");
+  fclose(ganhos);
   
 while(opção >= 0 && opção <= 5){
-    
   if (opção == 1){
     Cadastro();
     Menu();
@@ -65,18 +72,24 @@ while(opção >= 0 && opção <= 5){
     scanf("%d",&opção);
     }
   if (opção == 4){
-    Relatorio12meses();
+    Relat12meses();
     Menu();
     scanf("%d",&opção);
   }
   if (opção == 5){
-      Resetar();
-      Menu();
-      scanf("%d",&opção);
+    Resetar();
+    Menu();
+    scanf("%d",&opção);
     }
   if (opção == 0){
     saida();
     break;
+  }
+  if(opção > 5 || opção < 0){
+    printf("opção invalida");
+    printf("Por favor digitar uma opção valida");
+    Menu();
+    scanf("%d",&opção);
   }
   }
   return 0;
@@ -131,46 +144,45 @@ int Cadastro (struct cad a){
     printf("Ganhou quanto hoje?: ");
     scanf("%s", a.lucro);
     printf("----------------------------------------------\n");
-    printf("Com o que ganhou dinheiro hoje? \n");
-    printf("Salario\n");
-    printf("Vendas\n");
-    printf("Outros\n");
+    printf("Como ganhou dinheiro hoje? \n");
+    printf(" salario\n");
+    printf(" vendas\n");
+    printf(" outros\n");
     printf("----------------------------------------------\n");
     printf("Categoria: ");
     scanf("%s", a.categoria);
+    if ((strcmp(a.categoria, "salario") != 0) && (strcmp(a.categoria, "vendas") != 0) && (strcmp(a.categoria, "outros") != 0)){
+      puts("Categoria inválida! ");
+			puts("Volte ao menu novamente!!");
+      return 0;
+      
+  }
     printf("----------------------------------------------\n");
     FILE * ganhos = fopen("registro.txt","a");
     fprintf(ganhos,"%s\n", a.lucro);
     fprintf(ganhos,"%s\n", a.data);
     fprintf(ganhos,"%s\n\n",a.categoria);
-
-    printf("Dados computados\n");
+    fclose(ganhos);
+    printf("Dados Computados\n");
     printf("----------------------------------------------\n");
-    FILE *abrir = fopen("saldo.txt","a");
-    fclose(abrir);
-
+    
     FILE * ler = fopen("saldo.txt","r");
     int i = 0;
     while( fgets(a.saldoT ,40 , ler) != NULL ){   
       i++;
       
     }
-
+    fclose(ler);
+    
       float valor = atof(a.saldoT);
       float lucro = atof(a.lucro);
 
       float total = valor + lucro;
       
-      
-      
       FILE *arq = fopen("saldo.txt","w");
       fprintf(arq, "%.2f", total);
       fclose(arq);
-
-     
-    fclose(ler);
-    
-    fclose(ganhos);
+  
   }
   else if (a.declaracao == 2){
     FILE * perda = fopen("registro.txt","a");
@@ -178,36 +190,37 @@ int Cadastro (struct cad a){
     scanf("%s", a.prejuizo);
     printf("----------------------------------------------\n");
     printf("Com o que gastou seu dinheiro hoje? \n");
-    printf("Alimentação\n");
-    printf("Transporte\n");
-    printf("Moradia\n");
-    printf("Estudos\n");
-    printf("Pessoais\n");
+    printf(" alimentação\n");
+    printf(" transporte\n");
+    printf(" moradia\n");
+    printf(" estudos\n");
+    printf(" pessoais\n");
     printf("----------------------------------------------\n");
     printf("Categoria: ");
     scanf("%s", a.categoria);
+      if ((strcmp(a.categoria, "alimentação") != 0) && (strcmp(a.categoria, "transporte") != 0) && (strcmp(a.categoria, "moradia") != 0) && (strcmp(a.categoria, "estudos") != 0) && (strcmp(a.categoria, "pessoais") != 0)){
+        puts("Categoria inválida! ");
+			     puts("Volte ao menu novamente!!");
+        return 0;
+      }
+
     printf("----------------------------------------------\n");
     fprintf(perda, "-""%s\n", a.prejuizo);
     fprintf(perda,"%s\n", a.data);
     fprintf(perda,"%s\n\n",a.categoria);
+    
+    printf("Dados Computados\n");
 
-    printf("Dados computados\n");
-
-    FILE *abrir = fopen("saldo.txt","a");
-    fclose(abrir);
     FILE * ler = fopen("saldo.txt","r");
     int i = 0;
     while( fgets(a.saldoT ,40 , ler) != NULL ){   
       i++;
       
     }
-
-      float valor = atof(a.saldoT);
+			float valor = atof(a.saldoT);
       float prejuizo = atof(a.prejuizo);
 
       float total = valor - prejuizo;
-      
-      
       
       FILE *arq = fopen("saldo.txt","w");
       fprintf(arq, "%.2f", total);
@@ -221,7 +234,6 @@ int Cadastro (struct cad a){
   }
 
   return 0;
-  
 }
 
 //======================================================
@@ -236,33 +248,186 @@ int saldo(struct saldo a){
   FILE * ler = fopen("saldo.txt","r");
   while( fgets(a.saldoT ,40 , ler) != NULL ){   
   i++;
-  
+
   }
+  fclose(ler);
   printf("Seu saldo atualmente é de: R$");
   printf("%s\n",a.saldoT);
-  
-  fclose(ler);
-return 0;
+ 
+  return 0;
 }
 
 //======================================================
 //========= Função 12 Meses ============================
 struct R12{
-char ano1[20];
-char mes1[20];
-
+char aux[200][20];
+char auxano[10];
+int anoCL;
+char auxmes[10];
+int mesCL;
 };
 
-int Relatorio12meses(struct R12 c){
-  printf("Digite o Ano\n");
-  scanf("%s",c.ano1);
-  printf("Digite o Mês que deseja: \n");
-  scanf("%s",c.mes1);
-  FILE* relat = fopen ("Registro.txt", "r");
-  FILE* relhtml = fopen("RelatAnual.html", "w");
-  fprintf(relhtml,"");
- 
-  return 0;
+int Relat12meses(struct R12 c){ 
+
+  printf("Digite o Ano em quer procurar: ex: (20)\n");
+  scanf("%d",&c.anoCL);
+  if(c.anoCL > 99 || c.anoCL <0){
+    puts("Você digitou um ano invalido ");
+		puts("Volte para o menu novamente!!");
+    return 0;
+  }
+  
+  
+
+  char moradiaS[15]="moradia";
+  char alimentacaoS[15]="alimentação";
+  char trasnporteS[15]="transporte";
+  char estudoS[15] = "estudos";
+  char salarioS[15] = "salario";
+  char vendasS[15] = "vendas";
+  char outrosS[15] = "outros";
+  char pessoaisS[15] = "pessoais";
+
+  int i = 0;
+  int j = 0;
+  int ano = 0;
+  int mes = 0;
+  float PorMes1 = 0;
+  float PorMes2 = 0;
+  float PorMes3 = 0;
+  float PorMes4 = 0;
+  float PorMes5 = 0;
+  float PorMes6 = 0;
+  float PorMes7 = 0;
+  float PorMes8 = 0;
+  float PorMes9 = 0;
+  float PorMes10 = 0;
+  float PorMes11 = 0;
+  float PorMes12 = 0;
+  
+  	FILE * ler = fopen("registro.txt","r");
+    while( fgets(c.aux[i] ,20 , ler) != NULL ){
+    i++;
+    
+  }
+  fclose(ler);
+    
+    for(j=0; j!=i; j++){
+
+    c.auxmes[0] = c.aux[j][3];
+    c.auxmes[1] = c.aux[j][4];
+    c.auxmes[2] = '\0';
+
+    c.auxano[0] = c.aux[j][6];
+    c.auxano[1] = c.aux[j][7];
+    c.auxano[2] = '\0';
+
+    ano = atoi(c.auxano);
+    mes = atoi(c.auxmes);
+    
+      if(ano==c.anoCL && (mes == 1 || mes == 2 || mes == 3||mes == 4 || mes == 5 || mes == 6 || mes == 7  || mes == 8 || mes == 9 || mes == 10 || mes == 11 || mes == 12)){
+        float moradia=0;
+        float alimentacao=0;
+        float transporte=0;
+        float estudos=0;
+        float pessoais=0;
+        float salario=0;
+        float vendas=0 ; 
+        float outros = 0;
+        
+        if (strstr(c.aux[j+1],moradiaS) != NULL){
+          moradia = moradia + atof(c.aux[j-1]);
+        }
+        if (strstr(c.aux[j+1],alimentacaoS) != NULL){
+          alimentacao = alimentacao + atof(c.aux[j-1]);
+        }
+        if (strstr(c.aux[j+1],trasnporteS) != NULL){
+          transporte = transporte + atof(c.aux[j-1]);
+        }
+        if (strstr(c.aux[j+1],estudoS) != NULL){
+          estudos = estudos + atof(c.aux[j-1]);
+        }
+        if (strstr(c.aux[j+1],vendasS) != NULL){
+          vendas = vendas + atof(c.aux[j-1]);
+        }
+        if (strstr(c.aux[j+1],salarioS) != NULL){
+          salario = salario + atof(c.aux[j-1]);
+        }
+        if (strstr(c.aux[j+1],outrosS) != NULL){
+          outros = outros + atof(c.aux[j-1]);
+        }
+
+        float tot = moradia + alimentacao + transporte + estudos + vendas + salario + outros;  
+        
+        if (mes == 1){
+          PorMes1 = PorMes1 + tot;
+          
+        }
+        if (mes == 2){
+          PorMes2 = PorMes2 + tot;
+          
+        }
+        if (mes == 3){
+          PorMes3 = PorMes3 + tot;
+          
+        }
+        if (mes == 4){
+          PorMes4 = PorMes4 + tot;
+        }
+        if (mes == 5){
+          PorMes5 = PorMes5 + tot;
+        }
+        if (mes == 6){
+          PorMes6 = PorMes6 + tot;
+        }
+        if (mes == 7){
+          PorMes7 = PorMes7 + tot;
+        }
+        if (mes == 8){
+          PorMes8 = PorMes8 + tot;
+        }
+        if (mes == 9){
+          PorMes9 = PorMes9 + tot;
+        }
+        if (mes == 10){
+          PorMes10 = PorMes10 + tot;
+        }
+        if (mes == 11){
+          PorMes11 = PorMes11 + tot;
+        }
+        if (mes == 12){
+          PorMes12 = PorMes12 + tot;
+        }  
+  
+      }
+      
+    }
+  
+  FILE* relathtml = fopen("RelatAnual.html", "w");
+
+fprintf(relathtml,"<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='widht=devide-widht, initial-scale=1.0'><meta http-equi='X-UA-Compatible' content='ie=edge'><title>Grafico Mensal</title></head>\n");
+fprintf(relathtml,"<body><canvas class='line-chart'></canvas><script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>\n");
+fprintf(relathtml,"<script>var ctx = document.getElementsByClassName('line-chart');var myDoughnutChart = new Chart(ctx, {type: 'line', data: {labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio','Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], datasets: [{label: 'SEU GASTO ANUAL',\n");
+		fprintf(relathtml," data:   [%.2f,\n", PorMes1); 
+		fprintf(relathtml,"          %.2f,\n", PorMes1); 
+		fprintf(relathtml,"          %.2f,\n", PorMes3); 
+		fprintf(relathtml,"          %.2f,\n", PorMes4); 
+		fprintf(relathtml,"          %.2f,\n", PorMes5);
+		fprintf(relathtml,"          %.2f,\n", PorMes6); 
+		fprintf(relathtml,"          %.2f,\n", PorMes7);
+		fprintf(relathtml,"          %.2f,\n", PorMes8);
+		fprintf(relathtml,"          %.2f,\n", PorMes9);
+		fprintf(relathtml,"          %.2f,\n", PorMes10);
+		fprintf(relathtml,"          %.2f,\n", PorMes11);
+		fprintf(relathtml,"          %.2f],\n", PorMes12);
+		fprintf(relathtml,"      borderWidth: 6, borderColor: 'rgba(77,166,253,0.85)', backgroundColor: 'transparent',}]}});\n");
+fprintf(relathtml,"</script></body></html>\n");
+fclose(relathtml); 
+
+printf("----------------------------------------------\n");
+printf("Arquivo gerado com sucesso!!\n");
+printf("----------------------------------------------\n");
+return 0;
 }
 
 
@@ -367,7 +532,7 @@ int Relatorio1mes(struct R1 c){
 
 struct exit{
   int saida;
-  char opiniao[100];
+  char opiniao[200];
 };
 
 int saida(struct exit b){
@@ -378,32 +543,36 @@ int saida(struct exit b){
     printf("Ainda estamos em desenvolvimento, poderia nós ajudar a melhorar?\n");
     printf("Deixe sua opinião aqui?\n");
     scanf("%s", b.opiniao);
+		printf("----------------------------------------------\n");
     printf("Estaremos esperando você novamente!\n");
   }
   else if(b.saida > 5 && b.saida <= 8){
     printf("Obrigado pela sua nota!\n");
     printf("Deseja deixar sua opinao para futuros upgrades?\n");
     scanf("%s", b.opiniao);
+		printf("----------------------------------------------\n");
     printf("Estaremos esperando você novamente!\n");
   }
   else if(b.saida > 8 && b.saida <= 10){
     printf("Estamos muito contentes com a sua avaliação! :)\n");
     scanf("%s", b.opiniao);
+		printf("----------------------------------------------\n");
     printf("Estaremos esperando você novamente!\n");
   }
   else if(b.saida < 0 || b.saida > 10){
-    printf("Infelizmente sua nota está fora dos nossos padrões");
+    printf("Infelizmente sua nota está fora dos nossos padrões, isso é uma nota boa? até a proxima.");
   }
 return 0;
 }
 //=======================================================
 //====== Função Reseta ==================================
+
 struct apaga{
   int del;
 };
 
 int Resetar(struct apaga g){
- printf(" [1] - SIM\n [2] - NÃO\nRealmenente deseja apagar todos os dados? ");
+ printf(" [1] - SIM\n [2] - NÃO\nRealmenente deseja apagar todos os dados? \n");
  scanf("%d", &g.del);
  printf("----------------------------------------------\n");
 
@@ -411,17 +580,13 @@ int Resetar(struct apaga g){
     remove("registro.txt");
     remove("saldo.txt");
     remove("RelatMes.html");
+		remove("RelatAnual");
     printf("Todos dados deletados\n");
   }
-  else if(g.del == 2){
-      Menu();
-      scanf("%d",&opção);
 
+  else if(g.del>2 || g.del<1){
+    printf("Opção invalida\n");
   }
-  else{
-    printf("Opção invalida");
-  }
-
 
 return 0;  
 }
