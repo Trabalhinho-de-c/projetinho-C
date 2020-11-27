@@ -556,7 +556,7 @@ int Relatorio1mes(struct R1 c){
 
 struct exit{
   int saida;
-  char opiniao[200];
+  char opiniao[50];
 };
 
 int saida(struct exit b){
