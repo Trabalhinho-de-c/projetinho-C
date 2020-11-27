@@ -609,7 +609,7 @@ int Resetar(struct apaga g){
     remove("registro.txt");
     remove("saldo.txt");
     remove("RelatMes.html");
-		remove("RelatAnual");
+    remove("RelatAnual.html");
     printf("Todos dados deletados\n");
   }
 
