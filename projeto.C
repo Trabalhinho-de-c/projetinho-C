@@ -86,8 +86,8 @@ while(opção >= 0 && opção <= 5){
     break;
   }
   if(opção > 5 || opção < 0){
-    printf("opção invalida");
-    printf("Por favor digitar uma opção valida");
+    printf("opção invalida\n");
+    printf("Por favor digitar uma opção valida\n");
     Menu();
     scanf("%d",&opção);
   }
@@ -229,8 +229,8 @@ int Cadastro (struct cad a){
     fclose(perda);
   }
   else if (a.declaracao > 2 || a.declaracao < 1){
-    printf("Você digitou uma opção inválida, volte para o menu e faça o processo novamente :) ");
-
+    puts("Você digitou uma opção inválida :) ");
+    puts("Volte ao menu e faça o processo novamente!");
   }
 
   return 0;
@@ -273,7 +273,7 @@ int Relat12meses(struct R12 c){
   scanf("%d",&c.anoCL);
   if(c.anoCL > 99 || c.anoCL <0){
     puts("Você digitou um ano invalido ");
-		puts("Volte para o menu novamente!!");
+    puts("Volte para o menu novamente!!");
     return 0;
   }
   
@@ -460,7 +460,7 @@ int Relatorio1mes(struct R1 c){
 	printf("----------------------------------------------\n");
   if(c.mesCL > 12 || c.mesCL <= 0){
     puts("Você digitou um mês invalido ");
-		puts("Volte para o menu novamente!!");
+    puts("Volte para o menu novamente!!");
     return 0;
   }
 
@@ -545,9 +545,9 @@ int Relatorio1mes(struct R1 c){
   fprintf(relatoriohtml,"</script></body></html>");
   fclose(relatoriohtml);
   
-	printf("----------------------------------------------\n");
+  printf("----------------------------------------------\n");
   printf("Arquivo gerado com sucesso!!\n");
-	printf("----------------------------------------------\n");  
+  printf("----------------------------------------------\n");  
   return 0;
 }
 //======================================================
@@ -561,30 +561,35 @@ struct exit{
 
 int saida(struct exit b){
   printf("Por favor avalie nosso sistema com uma nota de 0 até 10: \n");
+  printf("----------------------------------------------\n");
   scanf("%d", &b.saida);
 
   if(b.saida >= 0 && b.saida <= 5 ){
     printf("Ainda estamos em desenvolvimento, poderia nós ajudar a melhorar?\n");
     printf("Deixe sua opinião aqui?\n");
+    printf("----------------------------------------------\n");
     scanf("%s", b.opiniao);
-		printf("----------------------------------------------\n");
+    printf("----------------------------------------------\n");
     printf("Estaremos esperando você novamente!\n");
   }
   else if(b.saida > 5 && b.saida <= 8){
     printf("Obrigado pela sua nota!\n");
     printf("Deseja deixar sua opinao para futuros upgrades?\n");
+    printf("----------------------------------------------\n");
     scanf("%s", b.opiniao);
-		printf("----------------------------------------------\n");
+    printf("----------------------------------------------\n");
     printf("Estaremos esperando você novamente!\n");
   }
   else if(b.saida > 8 && b.saida <= 10){
     printf("Estamos muito contentes com a sua avaliação! :)\n");
+    printf("----------------------------------------------\n");
     scanf("%s", b.opiniao);
-		printf("----------------------------------------------\n");
+    printf("----------------------------------------------\n");
     printf("Estaremos esperando você novamente!\n");
   }
   else if(b.saida < 0 || b.saida > 10){
-    printf("Infelizmente sua nota está fora dos nossos padrões, isso é uma nota boa? até a proxima.");
+    puts("Infelizmente sua nota está fora dos nossos padrões");
+    puts("isso é uma nota boa? até a proxima.");
   }
 return 0;
 }
@@ -615,37 +620,7 @@ int Resetar(struct apaga g){
 return 0;  
 }
 //=======================================================
-//====== Função cria html anual =========================
+/
 
-int HtmlAnual(){
-  FILE* relhtml = fopen("RelatAnual.html", "w");
-  fprintf(relhtml,"<!DOCTYPE html>\n<html lang='en'>\n");
-  fprintf(relhtml,"<head>\n<meta charset='UTF-8'>\n<meta name='viewport' content='widht=devide-widhtinitial-scale=1.0'>\n<meta http-equi='X-UA-Compatible' content='ie=edge'>\n<title>Grafico Anual</title>\n</head>\n");
-  
-  fprintf(relhtml,"<body>\n<canvas class='line-chart'></canvas>\n<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'>\n</script>\n");
-  
-  fprintf(relhtml,"<script>\nvar ctx = document.getElementsByClassName('line-chart');\nvar myDoughnutChart = new Chart(ctx, {type: 'line', data: {labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],\ndatasets: [{label: 'Alimentação', data: [535, 874, 482, 682, 572, 919, 192, 128, 791, 892, 472, 293, 939, 138],\nborderWidth: 6,\nborderColor: 'rgba(50, 115, 220,0.90)',\nbackgroundColor: 'transparent',},"); 
-  fprintf(relhtml,"{label: 'Transporte', data: [150, 75, 97, 689, 572, 910, 719, 182, 789, 189, 942, 823, 989, 938],\nborderWidth: 6,\nborderColor: 'rgba(6,204,6,0.85)',\nbackgroundColor: 'transparent',\n},");
-  fprintf(relhtml,"{label: 'Moradia', data: [600, 780, 970, 689, 572, 910, 719, 482, 789, 589, 642, 723, 489, 538],\nborderWidth: 6,\nborderColor: 'rgba(77,166,253,0.85)',\nbackgroundColor: 'transparent',\n},");
-  fprintf(relhtml,"{label: 'Estudos', data: [100, 78, 97, 189, 72, 91, 79, 82, 89, 99, 64, 72, 89, 58],\nborderWidth: 6,\nborderColor: 'rgba(220, 70, 70,.60)',\nbackgroundColor: 'transparent',\n},");
-  fprintf(relhtml,"{label: 'Pessoais', data: [800, 978, 597, 489, 772, 391, 579, 282, 389, 399, 264, 372, 289, 358],\nborderWidth: 6,\nborderColor: 'rgba(225, 0, 0,.60)',\nbackgroundColor: 'transparent',}]}});\n</script>\n");
-  fprintf(relhtml,"</body>\n");
-  fprintf(relhtml,"</html>\n");
 
-  fclose(relhtml);
-return 0;
-}
-
-//=======================================================
-//====== Função cria html mensal ========================
-int HtmlMensal(){
-  FILE* relatoriohtml = fopen("RelatMes.html", "w");
-  fprintf(relatoriohtml,"<!DOCTYPE html>\n<html lang='en'>\n<head>\n<meta charset='UTF-8'>\n<meta name='viewport' content='widht=devide-widht, initial-scale=1.0'>\n<meta http-equi='X-UA-Compatible' content='ie=edge'>\n<title>Grafico Mensal</title>\n</head>\n ");
-  fprintf(relatoriohtml,"<body>\n<canvas class='line-chart'></canvas>\n<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js'></script>\n<script>\nvar ctx = document.getElementsByClassName('line-chart');\nvar myDoughnutChart = new Chart(ctx, {\ntype: 'line',\ndata: {\nlabels: ['Alimentação', 'Transporte',\n 'Moradia', 'Estudos', 'Pessoais'],\ndatasets: [{\nlabel: 'SEU GASTO MENSAL',\ndata: [535, 874, 482, 682, 572, 919, 192, 128],\nborderWidth: 6,\nborderColor: 'rgba(77,166,253,0.85)',\nbackgroundColor: 'transparent',\n}]}});\n</script>\n ");
-  
-  
-  fclose(relatoriohtml);
-return 0;
-}
-//=======================================================
 
